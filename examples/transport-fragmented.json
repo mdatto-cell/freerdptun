@@ -1,0 +1,28 @@
+{
+  "stats_interval_seconds": 10,
+  "transport": {
+    "mode": "profiled",
+    "rate_limit_enabled": true,
+    "rate_accounting": "frame",
+    "burst_bytes": 65536,
+    "keepalive_min_seconds": 7,
+    "keepalive_max_seconds": 12,
+    "reassembly_timeout_seconds": 30,
+    "upload": {
+      "padding": true,
+      "fragment": true,
+      "frame_min_bytes": 400,
+      "frame_max_bytes": 900,
+      "jitter_max_ms": 0,
+      "small_packet_no_padding_bytes": 128
+    },
+    "download": {
+      "padding": true,
+      "fragment": true,
+      "frame_min_bytes": 400,
+      "frame_max_bytes": 900,
+      "jitter_max_ms": 0,
+      "small_packet_no_padding_bytes": 128
+    }
+  }
+}

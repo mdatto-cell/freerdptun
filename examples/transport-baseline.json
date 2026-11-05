@@ -1,0 +1,12 @@
+{
+  "stats_interval_seconds": 10,
+  "transport": {
+    "mode": "baseline",
+    "rate_limit_enabled": false,
+    "rate_accounting": "ip",
+    "burst_bytes": 65536,
+    "keepalive_min_seconds": 10,
+    "keepalive_max_seconds": 10,
+    "reassembly_timeout_seconds": 30
+  }
+}

@@ -1,0 +1,16 @@
+/build/
+/dist/
+/state/
+/.release/
+/.DS_Store
+server.json
+client.json
+*.key
+*.pem
+*.pfx
+*.p12
+*.pcap
+*.pcapng
+*.log
+*.test
+*.test.exe

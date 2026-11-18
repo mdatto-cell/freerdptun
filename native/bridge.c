@@ -423,9 +423,15 @@ int rdpt_bridge_run(const char *host, unsigned port, const char *pin, int in_fd,
     static BOOL once = FALSE;
     if (!host || !pin || strlen(pin) != 64 || port == 0 || port > 65535) return 2;
     if (!once) {
+#ifdef __ANDROID__
+        /* Console appender goes to logcat on Android; the host sets WLOG_APPENDER=file
+         * so FreeRDP messages land in the app log directory instead. */
+        WLog_SetLogLevel(WLog_GetRoot(), WLOG_INFO);
+#else
         WLog_SetLogAppenderType(WLog_GetRoot(), WLOG_APPENDER_CONSOLE);
         WLog_ConfigureAppender(WLog_GetLogAppender(WLog_GetRoot()), "outputstream", "stderr");
         WLog_SetLogLevel(WLog_GetRoot(), WLOG_WARN);
+#endif
         WSADATA ws;
         if (WSAStartup(MAKEWORD(2,2), &ws)) return 1;
         signal(SIGPIPE, SIG_IGN);

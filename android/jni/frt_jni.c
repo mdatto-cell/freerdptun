@@ -23,7 +23,11 @@ JNIEXPORT void JNICALL JNI(init)(JNIEnv *env, jobject thiz, jstring logPath, jst
     (void)thiz;
     /* Android не задаёт HOME; без него freerdp_context_new() падает (GetKnownPath(HOME) == NULL). */
     const char *home = (*env)->GetStringUTFChars(env, homeDir, NULL);
-    if (home) { setenv("HOME", home, 1); (*env)->ReleaseStringUTFChars(env, homeDir, home); }
+    if (home) {
+        setenv("WLOG_APPENDER", "file", 1);
+        setenv("WLOG_FILEAPPENDER_OUTPUT_FILE_PATH", home, 1);
+        setenv("WLOG_FILEAPPENDER_OUTPUT_FILE_NAME", "frt-freerdp.log", 1);
+        setenv("HOME", home, 1); (*env)->ReleaseStringUTFChars(env, homeDir, home); }
     const char *path = (*env)->GetStringUTFChars(env, logPath, NULL);
     if (path) {
         /* stderr (Go log + FreeRDP WLog + bridge) -> app log file */

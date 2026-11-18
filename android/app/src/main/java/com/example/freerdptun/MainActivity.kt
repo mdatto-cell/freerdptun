@@ -353,10 +353,12 @@ private fun LogScreen(close: () -> Unit) {
     var text by remember { mutableStateOf("") }
     LaunchedEffect(Unit) {
         while (true) {
-            text = runCatching {
-                val b = Native.logFile.readBytes()
-                String(b, maxOf(0, b.size - 48 * 1024), minOf(b.size, 48 * 1024))
-            }.getOrDefault("")
+            text = listOf(Native.logFile, java.io.File(Native.logFile.parentFile, "frt-freerdp.log")).joinToString("\n") { f ->
+                runCatching {
+                    val b = f.readBytes()
+                    String(b, maxOf(0, b.size - 32 * 1024), minOf(b.size, 32 * 1024))
+                }.getOrDefault("")
+            }
             delay(1000)
         }
     }

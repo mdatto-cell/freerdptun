@@ -1,0 +1,185 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		77216E142DABF2DB6AADE2D6 = {isa = PBXBuildFile; fileRef = 735CD73E281616296FF9391B; };
+		F6E146B8ECE9E4080D603672 = {isa = PBXBuildFile; fileRef = D31D4D472F7DFADD1BECCAAB; };
+		29822FA26788F669AF14C310 = {isa = PBXBuildFile; fileRef = 68A4DAFE3B2966B800DB7ED9; };
+		F7A52139491166D807959947 = {isa = PBXBuildFile; fileRef = D2E0E1839E54324572D4DDF0; };
+		6469BBCCF9BC1709CCAF1FD3 = {isa = PBXBuildFile; fileRef = FBEC6BB6B2FA0E32C0BF00A4; };
+		EAF1BF37239707A29FEA5CCD = {isa = PBXBuildFile; fileRef = 8A7EF202153FF927E46B49F1; };
+		1B0C0CFD55F1FB47AF1C3A62 = {isa = PBXBuildFile; fileRef = 48AC0C874F229996049A84DE; };
+		83CE43596E0A829B731373F6 = {isa = PBXBuildFile; fileRef = 441A1241E162C4598CCFE8F8; };
+		2AAD1E394E03269A381FB9D7 = {isa = PBXBuildFile; fileRef = 4D482ADEBBEE417FB06A2FE5; };
+		6BD95DA5EADA9EC1DC55397D = {isa = PBXBuildFile; fileRef = 736319D94E47A401C1E6ACA1; };
+		2EFACB3F38CC4EAD3898C6A8 = {isa = PBXBuildFile; fileRef = 441A1241E162C4598CCFE8F8; };
+		EB86007EB858B22E11981432 = {isa = PBXBuildFile; fileRef = 531E683C61C874129071C685; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D799BAE6088A90139B415FCC = {isa = PBXContainerItemProxy; containerPortal = 633579642D79D259F3001E4F; proxyType = 1; remoteGlobalIDString = B0F8150B4D28544946565F9A; remoteInfo = PacketTunnel; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3CBB55013495CF6C8C900900 = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (EB86007EB858B22E11981432, ); name = "Embed Foundation Extensions"; runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		735CD73E281616296FF9391B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeRDPTunApp.swift; sourceTree = "<group>"; };
+		D31D4D472F7DFADD1BECCAAB = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		68A4DAFE3B2966B800DB7ED9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
+		D2E0E1839E54324572D4DDF0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		FBEC6BB6B2FA0E32C0BF00A4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		8A7EF202153FF927E46B49F1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		48AC0C874F229996049A84DE = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelController.swift; sourceTree = "<group>"; };
+		441A1241E162C4598CCFE8F8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelConfig.swift; sourceTree = "<group>"; };
+		4D482ADEBBEE417FB06A2FE5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		736319D94E47A401C1E6ACA1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = frt_glue.c; sourceTree = "<group>"; };
+		B0DAE0506E82BCB450007491 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRTCore.h; sourceTree = "<group>"; };
+		6A01F20324BCD9C9479283E8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tunnel-Bridging-Header.h; sourceTree = "<group>"; };
+		0356C52372ED5869E5B2C298 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAA18036D200E08B21B1C0C1 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		268F57220FF42CA403433871 = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
+		7E916E6DC400FD507FB9BD12 = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tunnel.entitlements; sourceTree = "<group>"; };
+		F36F51983873C6B01BF25783 = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = frt.xcconfig; sourceTree = "<group>"; };
+		9F358B13F44DE59E1E33F607 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeRDPTun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		531E683C61C874129071C685 = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		77BF003FADD28745D4E74214 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		2B00EB9FB8C3921461A098BC = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		55BC601D3C24ADC37B31739E = {isa = PBXGroup; children = (3C550C20E21B2BC0C19E57A4, 286D4CDA4EB9116B56B64644, 0D810636F62E2CCF011F2EA0, 662D9A92563035C47F9CDF8C, 35FB66020CC439F6F9D60484, ); sourceTree = "<group>"; };
+		3C550C20E21B2BC0C19E57A4 = {isa = PBXGroup; children = (735CD73E281616296FF9391B, D31D4D472F7DFADD1BECCAAB, 68A4DAFE3B2966B800DB7ED9, D2E0E1839E54324572D4DDF0, FBEC6BB6B2FA0E32C0BF00A4, 8A7EF202153FF927E46B49F1, 48AC0C874F229996049A84DE, 0356C52372ED5869E5B2C298, 268F57220FF42CA403433871, ); path = App; sourceTree = "<group>"; };
+		286D4CDA4EB9116B56B64644 = {isa = PBXGroup; children = (441A1241E162C4598CCFE8F8, B0DAE0506E82BCB450007491, ); path = Shared; sourceTree = "<group>"; };
+		0D810636F62E2CCF011F2EA0 = {isa = PBXGroup; children = (4D482ADEBBEE417FB06A2FE5, 736319D94E47A401C1E6ACA1, 6A01F20324BCD9C9479283E8, CAA18036D200E08B21B1C0C1, 7E916E6DC400FD507FB9BD12, ); path = Tunnel; sourceTree = "<group>"; };
+		662D9A92563035C47F9CDF8C = {isa = PBXGroup; children = (F36F51983873C6B01BF25783, ); path = Libs; sourceTree = "<group>"; };
+		35FB66020CC439F6F9D60484 = {isa = PBXGroup; children = (9F358B13F44DE59E1E33F607, 531E683C61C874129071C685, ); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3B3804601620DF5DD3180EE1 = {isa = PBXNativeTarget; buildConfigurationList = AE00E44D1CF6E2E3FA93958F; buildPhases = (AB2871415A4719D5792A2162, 77BF003FADD28745D4E74214, A50CD1BDB3A1CB1FFC8AA122, 3CBB55013495CF6C8C900900, ); buildRules = (); dependencies = (E9FAD0C6CD43534327C0AF90, ); name = FreeRDPTun; productName = FreeRDPTun; productReference = 9F358B13F44DE59E1E33F607; productType = "com.apple.product-type.application"; };
+		B0F8150B4D28544946565F9A = {isa = PBXNativeTarget; buildConfigurationList = 1F91BB139409857DBD812842; buildPhases = (CD50DE4CECA2D4104ADAE5E1, 2B00EB9FB8C3921461A098BC, 4915E26F763AA25143D39263, ); buildRules = (); dependencies = (); name = PacketTunnel; productName = PacketTunnel; productReference = 531E683C61C874129071C685; productType = "com.apple.product-type.app-extension"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		633579642D79D259F3001E4F = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1500; LastUpgradeCheck = 1500; }; buildConfigurationList = EA14EA6A43D4399E6D2CE974; compatibilityVersion = "Xcode 14.0"; developmentRegion = ru; hasScannedForEncodings = 0; knownRegions = (ru, en, Base, ); mainGroup = 55BC601D3C24ADC37B31739E; productRefGroup = 35FB66020CC439F6F9D60484; projectDirPath = ""; projectRoot = ""; targets = (3B3804601620DF5DD3180EE1, B0F8150B4D28544946565F9A, ); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A50CD1BDB3A1CB1FFC8AA122 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		4915E26F763AA25143D39263 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB2871415A4719D5792A2162 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (77216E142DABF2DB6AADE2D6, F6E146B8ECE9E4080D603672, 29822FA26788F669AF14C310, F7A52139491166D807959947, 6469BBCCF9BC1709CCAF1FD3, EAF1BF37239707A29FEA5CCD, 1B0C0CFD55F1FB47AF1C3A62, 83CE43596E0A829B731373F6, ); runOnlyForDeploymentPostprocessing = 0; };
+		CD50DE4CECA2D4104ADAE5E1 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (2AAD1E394E03269A381FB9D7, 6BD95DA5EADA9EC1DC55397D, 2EFACB3F38CC4EAD3898C6A8, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E9FAD0C6CD43534327C0AF90 = {isa = PBXTargetDependency; target = B0F8150B4D28544946565F9A; targetProxy = D799BAE6088A90139B415FCC; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6A7A9C00E9D82F8B527AF6B5 = {isa = XCBuildConfiguration; buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = "NO";
+				CLANG_ENABLE_MODULES = "YES";
+				CLANG_ENABLE_OBJC_ARC = "YES";
+				ENABLE_USER_SCRIPT_SANDBOXING = "NO";
+				IPHONEOS_DEPLOYMENT_TARGET = "16.0";
+				SDKROOT = "iphoneos";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = "1";
+				MARKETING_VERSION = "0.1.3";
+				CURRENT_PROJECT_VERSION = "1";
+				CODE_SIGN_STYLE = "Automatic";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = "NO";
+				GCC_C_LANGUAGE_STANDARD = "gnu11";
+				DEBUG_INFORMATION_FORMAT = "dwarf";
+				ONLY_ACTIVE_ARCH = "YES";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG";
+			}; name = Debug; };
+		01172647D9872636A9E33D38 = {isa = XCBuildConfiguration; buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = "NO";
+				CLANG_ENABLE_MODULES = "YES";
+				CLANG_ENABLE_OBJC_ARC = "YES";
+				ENABLE_USER_SCRIPT_SANDBOXING = "NO";
+				IPHONEOS_DEPLOYMENT_TARGET = "16.0";
+				SDKROOT = "iphoneos";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = "1";
+				MARKETING_VERSION = "0.1.3";
+				CURRENT_PROJECT_VERSION = "1";
+				CODE_SIGN_STYLE = "Automatic";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = "NO";
+				GCC_C_LANGUAGE_STANDARD = "gnu11";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = "YES";
+			}; name = Release; };
+		967DE5DAE8F9C3546488D3FD = {isa = XCBuildConfiguration; buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.freerdptun";
+				PRODUCT_NAME = "FreeRDPTun";
+				INFOPLIST_FILE = "App/Info.plist";
+				CODE_SIGN_ENTITLEMENTS = "App/App.entitlements";
+				GENERATE_INFOPLIST_FILE = "NO";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+			}; name = Debug; };
+		70A5F3AAC43D0790B57ED51A = {isa = XCBuildConfiguration; buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.freerdptun";
+				PRODUCT_NAME = "FreeRDPTun";
+				INFOPLIST_FILE = "App/Info.plist";
+				CODE_SIGN_ENTITLEMENTS = "App/App.entitlements";
+				GENERATE_INFOPLIST_FILE = "NO";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+			}; name = Release; };
+		3E65CD39BD3F94C3918904FE = {isa = XCBuildConfiguration; baseConfigurationReference = F36F51983873C6B01BF25783; buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.freerdptun.tunnel";
+				PRODUCT_NAME = "PacketTunnel";
+				INFOPLIST_FILE = "Tunnel/Info.plist";
+				CODE_SIGN_ENTITLEMENTS = "Tunnel/Tunnel.entitlements";
+				GENERATE_INFOPLIST_FILE = "NO";
+				SKIP_INSTALL = "YES";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tunnel/Tunnel-Bridging-Header.h";
+				HEADER_SEARCH_PATHS = ("$(SRCROOT)/Shared", "$(SRCROOT)/../native", );
+				LIBRARY_SEARCH_PATHS = ("$(SRCROOT)/Libs/lib", );
+				OTHER_LDFLAGS = "$(inherited) $(FRT_LIBS) -lresolv -lz -framework Security -framework CoreFoundation -framework SystemConfiguration";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+			}; name = Debug; };
+		35491E2C810F1CDC94061AC5 = {isa = XCBuildConfiguration; baseConfigurationReference = F36F51983873C6B01BF25783; buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.freerdptun.tunnel";
+				PRODUCT_NAME = "PacketTunnel";
+				INFOPLIST_FILE = "Tunnel/Info.plist";
+				CODE_SIGN_ENTITLEMENTS = "Tunnel/Tunnel.entitlements";
+				GENERATE_INFOPLIST_FILE = "NO";
+				SKIP_INSTALL = "YES";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tunnel/Tunnel-Bridging-Header.h";
+				HEADER_SEARCH_PATHS = ("$(SRCROOT)/Shared", "$(SRCROOT)/../native", );
+				LIBRARY_SEARCH_PATHS = ("$(SRCROOT)/Libs/lib", );
+				OTHER_LDFLAGS = "$(inherited) $(FRT_LIBS) -lresolv -lz -framework Security -framework CoreFoundation -framework SystemConfiguration";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+			}; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA14EA6A43D4399E6D2CE974 = {isa = XCConfigurationList; buildConfigurations = (6A7A9C00E9D82F8B527AF6B5, 01172647D9872636A9E33D38, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		AE00E44D1CF6E2E3FA93958F = {isa = XCConfigurationList; buildConfigurations = (967DE5DAE8F9C3546488D3FD, 70A5F3AAC43D0790B57ED51A, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		1F91BB139409857DBD812842 = {isa = XCConfigurationList; buildConfigurations = (3E65CD39BD3F94C3918904FE, 35491E2C810F1CDC94061AC5, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = 633579642D79D259F3001E4F;
+}

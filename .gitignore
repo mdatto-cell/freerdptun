@@ -15,8 +15,3 @@ client.json
 *.test
 *.test.exe
 /ios/Libs/
-/ios/*.xcodeproj
-/ios/App/Info.plist
-/ios/Tunnel/Info.plist
-/ios/App/App.entitlements
-/ios/Tunnel/Tunnel.entitlements

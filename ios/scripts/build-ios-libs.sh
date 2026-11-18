@@ -60,7 +60,7 @@ cd "$ROOT"
 CGO_ENABLED=1 GOOS=ios GOARCH=arm64 CC="$CLANG" \
 CGO_CFLAGS="-isysroot $SDK -arch arm64 -miphoneos-version-min=$MIN_IOS" \
 CGO_LDFLAGS="-isysroot $SDK -arch arm64 -miphoneos-version-min=$MIN_IOS" \
-  go build -trimpath -ldflags="-s -w" -buildmode=c-archive -o "$OUT/lib/libfrtcore.a" ./ios/core
+  go build -trimpath -ldflags="-s -w" -buildmode=c-archive -o "$OUT/lib/libfrtcore.a" ./mobile/core
 
 # ---------- 5. collect libraries ----------
 # FreeRDP/WinPR/channel static archives (names are unique across the build tree).

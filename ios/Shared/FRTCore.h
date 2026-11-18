@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "bridge_api.h"
 
-/* Exported by libfrtcore.a (Go, ios/core/main.go). */
+/* Exported by libfrtcore.a (Go, mobile/core/main.go). */
 void FRTRegisterBridge(void *run, void *stop);
 int FRTStart(const char *cfg, char *errbuf, int errlen);
 void FRTStop(void);

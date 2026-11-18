@@ -9,7 +9,7 @@
 ```
 iOS  ──packetFlow──▶ PacketTunnelProvider.swift
                           │  FRTPushPacket / FRTPopPacket
-                     libfrtcore.a (Go, ios/core)  ← неизменённая логика internal/tunnel
+                     libfrtcore.a (Go, mobile/core)  ← неизменённая логика internal/tunnel
                           │  два pipe (тот же формат кадров, что stdin/stdout)
                      libfrtbridge.a (native/bridge.c, -DFRT_LIBRARY) + статический FreeRDP 3.28.0
                           │

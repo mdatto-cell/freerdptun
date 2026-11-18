@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.FreeRDPTun" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

@@ -1,5 +1,5 @@
-// Command core builds libfrtcore.a (-buildmode=c-archive) for the iOS Packet
-// Tunnel extension. It runs the unchanged FreeRDPTun client logic
+// Command core builds the shared Go core of the mobile clients: libfrtcore.a
+// (c-archive, iOS Packet Tunnel extension) or libfrtcore.so (c-shared, Android). It runs the unchanged FreeRDPTun client logic
 // (internal/tunnel) over an in-memory packet device and the in-process native
 // bridge (native/bridge.c built with -DFRT_LIBRARY).
 package main
@@ -29,7 +29,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"runtime/debug"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -48,9 +47,7 @@ const (
 )
 
 func init() {
-	// Network Extensions are memory limited (~50 MB incl. FreeRDP).
-	debug.SetGCPercent(50)
-	debug.SetMemoryLimit(28 << 20)
+	tuneMemory()
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
 	log.SetPrefix("[core] ")
 }

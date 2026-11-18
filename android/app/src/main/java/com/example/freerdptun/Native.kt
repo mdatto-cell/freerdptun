@@ -18,12 +18,12 @@ object Native {
     fun ensureInit(ctx: Context) {
         if (ready) return
         logFile = File(ctx.applicationContext.filesDir, "frt.log")
-        init(logFile.absolutePath)
+        init(logFile.absolutePath, ctx.applicationContext.filesDir.absolutePath)
         ready = true
     }
 
-    /** Перенаправляет stderr в файл журнала и регистрирует FreeRDP-транспорт. */
-    private external fun init(logPath: String)
+    /** Перенаправляет stderr в файл журнала задаёт HOME и регистрирует FreeRDP-транспорт. */
+    private external fun init(logPath: String, homeDir: String)
 
     /** null при успехе, иначе текст ошибки. */
     external fun start(cfg: String): String?

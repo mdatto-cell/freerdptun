@@ -19,8 +19,11 @@ extern int FRTPopPacket(uint8_t *p, int capacity, int timeoutMs);
 
 #define JNI(name) Java_com_example_freerdptun_Native_##name
 
-JNIEXPORT void JNICALL JNI(init)(JNIEnv *env, jobject thiz, jstring logPath) {
+JNIEXPORT void JNICALL JNI(init)(JNIEnv *env, jobject thiz, jstring logPath, jstring homeDir) {
     (void)thiz;
+    /* Android не задаёт HOME; без него freerdp_context_new() падает (GetKnownPath(HOME) == NULL). */
+    const char *home = (*env)->GetStringUTFChars(env, homeDir, NULL);
+    if (home) { setenv("HOME", home, 1); (*env)->ReleaseStringUTFChars(env, homeDir, home); }
     const char *path = (*env)->GetStringUTFChars(env, logPath, NULL);
     if (path) {
         /* stderr (Go log + FreeRDP WLog + bridge) -> app log file */

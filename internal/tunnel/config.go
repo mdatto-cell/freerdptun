@@ -1,6 +1,7 @@
 package tunnel
 
 import (
+	"bytes"
 	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
@@ -89,6 +90,37 @@ func UUIDBytes(s string) ([]byte, error) {
 		return nil, errors.New("zero UUID is forbidden")
 	}
 	return b, nil
+}
+
+// ParseConfig decodes and validates a JSON configuration held in memory.
+// Unlike Load it does not resolve file paths and does not locate a bridge
+// executable (the iOS client embeds the bridge).
+func ParseConfig(data []byte) (Config, error) {
+	var c Config
+	d := json.NewDecoder(io.LimitReader(bytes.NewReader(data), 1024*1024))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&c); err != nil {
+		return c, err
+	}
+	if err := d.Decode(new(any)); err != io.EOF {
+		return c, errors.New("trailing JSON data")
+	}
+	if c.MTU == 0 {
+		c.MTU = 1400
+	}
+	if c.MaxConnections == 0 {
+		c.MaxConnections = 32
+	}
+	if c.HandshakeSeconds == 0 {
+		c.HandshakeSeconds = 20
+	}
+	if c.IdleSeconds == 0 {
+		c.IdleSeconds = 60
+	}
+	if c.QueuePackets == 0 {
+		c.QueuePackets = 256
+	}
+	return c, c.Validate()
 }
 func Load(path string) (Config, error) {
 	var c Config

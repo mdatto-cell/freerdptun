@@ -215,10 +215,31 @@ func Run(ctx context.Context, c Config) error {
 	return runServer(ctx, c, t)
 }
 func runClient(parent context.Context, c Config, t Device) error {
+	return runClientWith(parent, c, t, func(ctx context.Context, c Config) (*Bridge, error) {
+		host, port, _ := net.SplitHostPort(c.Address)
+		return StartBridge(ctx, c.Bridge, []string{"--host", host, "--port", port, "--pin", strings.ToLower(c.ServerSHA256)}, nil)
+	}, nil)
+}
+
+// BridgeStarter starts the native transport for a client session.
+type BridgeStarter func(ctx context.Context, c Config) (*Bridge, error)
+
+// RunClientDevice runs the client over a caller-provided packet device and
+// bridge (used by the iOS Packet Tunnel). onConnected is called once after
+// RDP and UUID authentication succeed.
+func RunClientDevice(ctx context.Context, c Config, t Device, start BridgeStarter, onConnected func()) error {
+	if e := c.Validate(); e != nil {
+		return e
+	}
+	if c.Mode != "client" {
+		return errors.New("client configuration required")
+	}
+	return runClientWith(ctx, c, t, start, onConnected)
+}
+func runClientWith(parent context.Context, c Config, t Device, start BridgeStarter, onConnected func()) error {
 	ctx, cancel := context.WithCancel(parent)
 	defer cancel()
-	host, port, _ := net.SplitHostPort(c.Address)
-	p, e := StartBridge(ctx, c.Bridge, []string{"--host", host, "--port", port, "--pin", strings.ToLower(c.ServerSHA256)}, nil)
+	p, e := start(ctx, c)
 	if e != nil {
 		return e
 	}
@@ -234,6 +255,9 @@ func runClient(parent context.Context, c Config, t Device) error {
 		return e
 	}
 	log.Printf("connected: %s, IPv4=%s MTU=%d", c.Address, c.IPv4, mtu)
+	if onConnected != nil {
+		onConnected()
+	}
 	policy := &ipPolicy{subnet: netip.MustParsePrefix(c.CIDR), expected: netip.MustParseAddr(c.IPv4)}
 	defer func() { log.Printf("session ended: filtered_packets=%d", policy.filtered.Load()) }()
 	queue := make(chan []byte, c.QueuePackets)

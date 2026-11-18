@@ -17,6 +17,15 @@ type Bridge struct {
 	out  io.ReadCloser
 	done chan struct{}
 	once sync.Once
+	// closer is set for in-process bridges (no child process, e.g. iOS).
+	closer func()
+}
+
+// NewCustomBridge wraps an in-process bridge. r/w carry the same
+// length-prefixed message stream as the child's stdout/stdin; closeFn must
+// stop the bridge and release r and w. It is called at most once.
+func NewCustomBridge(r io.Reader, w io.Writer, closeFn func()) *Bridge {
+	return &Bridge{Wire: NewWire(r, w), closer: closeFn, done: make(chan struct{})}
 }
 
 func StartBridge(ctx context.Context, path string, args []string, files []*os.File) (*Bridge, error) {
@@ -49,6 +58,11 @@ func StartBridge(ctx context.Context, path string, args []string, files []*os.Fi
 }
 func (p *Bridge) Close() {
 	p.once.Do(func() {
+		if p.closer != nil {
+			p.closer()
+			close(p.done)
+			return
+		}
 		_ = p.in.Close()
 		select {
 		case <-p.done:

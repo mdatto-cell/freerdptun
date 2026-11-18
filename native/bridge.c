@@ -9,16 +9,24 @@
  */
 #include <freerdp/config.h>
 #include <freerdp/freerdp.h>
+#ifndef FRT_LIBRARY
 #include <freerdp/peer.h>
+#endif
 #include <freerdp/settings.h>
+#ifndef FRT_LIBRARY
 #include <freerdp/crypto/certificate.h>
 #include <freerdp/crypto/privatekey.h>
+#endif
 #include <freerdp/client/cmdline.h>
 #include <freerdp/client/channels.h>
 #include <freerdp/channels/channels.h>
 #include <freerdp/channels/drdynvc.h>
+#ifndef FRT_LIBRARY
 #include <freerdp/channels/wtsvc.h>
+#endif
+#ifndef FRT_LIBRARY
 #include <freerdp/server/channels.h>
+#endif
 #include <winpr/crt.h>
 #include <winpr/synch.h>
 #include <winpr/thread.h>
@@ -37,8 +45,14 @@
 #include <fcntl.h>
 #else
 #include <unistd.h>
+#ifdef FRT_LIBRARY
+/* Embedded (iOS) build: in-process client library, no server, no stdio. */
+#include <poll.h>
+#include <errno.h>
+#else
 #include <grp.h>
 #include <sys/prctl.h>
+#endif
 #endif
 
 #define CHANNEL_NAME "FreeRDPTun::IP::1"
@@ -55,7 +69,7 @@ static struct {
     BYTE pin[32];
 } state;
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(FRT_LIBRARY)
 static BOOL drop_privileges(void) {
     if (geteuid() == 0) {
         if (setgroups(0, NULL) || setgid(65534) || setuid(65534)) {
@@ -67,6 +81,32 @@ static BOOL drop_privileges(void) {
 }
 #endif
 
+#ifdef FRT_LIBRARY
+static int g_in_fd = -1, g_out_fd = -1;
+static int read_all(BYTE *p, size_t n) {
+    while (n) {
+        struct pollfd pfd = {g_in_fd, POLLIN, 0};
+        int pr = poll(&pfd, 1, 100);
+        if (WaitForSingleObject(state.stop, 0) == WAIT_OBJECT_0) return 0;
+        if (pr < 0) { if (errno == EINTR) continue; return 0; }
+        if (pr == 0) continue;
+        ssize_t r = read(g_in_fd, p, n);
+        if (r < 0 && (errno == EINTR || errno == EAGAIN)) continue;
+        if (r <= 0) return 0;
+        p += r; n -= (size_t)r;
+    }
+    return 1;
+}
+static BOOL output(const BYTE *p, size_t n) {
+    while (n) {
+        ssize_t w = write(g_out_fd, p, n);
+        if (w < 0 && (errno == EINTR || errno == EAGAIN)) continue;
+        if (w <= 0) { SetEvent(state.stop); return FALSE; }
+        p += w; n -= (size_t)w;
+    }
+    return TRUE;
+}
+#else
 static int read_all(BYTE *p, size_t n) {
     while (n) {
         size_t r = fread(p, 1, n, stdin);
@@ -82,6 +122,7 @@ static BOOL output(const BYTE *p, size_t n) {
     }
     return TRUE;
 }
+#endif
 static DWORD WINAPI input_main(LPVOID unused) {
     (void)unused;
     for (;;) {
@@ -194,7 +235,8 @@ static int client_run(const char *host, UINT32 port) {
     int result = 1;
     if (!client || !freerdp_context_new(client)) goto done;
     rdpSettings *s = client->context->settings;
-    freerdp_register_addin_provider(provider, 0);
+    static BOOL provider_registered = FALSE;
+    if (!provider_registered) { freerdp_register_addin_provider(provider, 0); provider_registered = TRUE; }
     client->LoadChannels = load_channels;
     client->PostConnect = client_post_connect;
     client->AuthenticateEx = reject_auth;
@@ -256,7 +298,7 @@ done:
     return result;
 }
 
-#ifndef _WIN32
+#if !defined(_WIN32) && !defined(FRT_LIBRARY)
 typedef struct { rdpContext base; HANDLE vcm; BOOL activated; } server_context;
 static BOOL server_context_new(freerdp_peer *peer, rdpContext *base) {
     server_context *ctx = (server_context*)base;
@@ -368,6 +410,55 @@ done:
 }
 #endif
 
+#ifdef FRT_LIBRARY
+/* In-process client entry point for the iOS Packet Tunnel extension.
+ * in_fd/out_fd are pipe ends owned by the caller; the same length-prefixed
+ * message stream as stdin/stdout is used. Blocks until the session ends. */
+#include "bridge_api.h"
+void rdpt_bridge_stop(void) {
+    HANDLE h = state.stop;
+    if (h) SetEvent(h);
+}
+int rdpt_bridge_run(const char *host, unsigned port, const char *pin, int in_fd, int out_fd) {
+    static BOOL once = FALSE;
+    if (!host || !pin || strlen(pin) != 64 || port == 0 || port > 65535) return 2;
+    if (!once) {
+        WLog_SetLogAppenderType(WLog_GetRoot(), WLOG_APPENDER_CONSOLE);
+        WLog_ConfigureAppender(WLog_GetLogAppender(WLog_GetRoot()), "outputstream", "stderr");
+        WLog_SetLogLevel(WLog_GetRoot(), WLOG_WARN);
+        WSADATA ws;
+        if (WSAStartup(MAKEWORD(2,2), &ws)) return 1;
+        signal(SIGPIPE, SIG_IGN);
+        once = TRUE;
+    }
+    memset(&state, 0, sizeof(state));
+    for (unsigned i = 0; i < 32; i++) {
+        char h[3] = {pin[i*2], pin[i*2+1], 0}; char *end;
+        unsigned long v = strtoul(h, &end, 16);
+        if (*end) return 2;
+        state.pin[i] = (BYTE)v;
+    }
+    g_in_fd = in_fd; g_out_fd = out_fd;
+    InitializeCriticalSection(&state.lock);
+    state.available = CreateEvent(NULL, TRUE, FALSE, NULL);
+    state.space = CreateEvent(NULL, TRUE, TRUE, NULL);
+    HANDLE stop = CreateEvent(NULL, TRUE, FALSE, NULL);
+    if (!state.available || !state.space || !stop) return 1;
+    state.stop = stop;
+    state.input_thread = CreateThread(NULL, 0, input_main, NULL, 0, NULL);
+    if (!state.input_thread) return 1;
+    int rc = client_run(host, port);
+    SetEvent(state.stop);
+    WaitForSingleObject(state.input_thread, 3000);
+    CloseHandle(state.input_thread);
+    for (unsigned i = 0; i < state.count; i++) free(state.queue[(state.head + i) % QUEUE_COUNT].data);
+    DeleteCriticalSection(&state.lock);
+    HANDLE a = state.available, sp = state.space;
+    state.stop = NULL;
+    CloseHandle(a); CloseHandle(sp); CloseHandle(stop);
+    return rc;
+}
+#else
 static const char *arg(int argc, char **argv, const char *key) {
     for (int i=1; i+1<argc; i++) if (!strcmp(argv[i], key)) return argv[i+1];
     return NULL;
@@ -437,3 +528,5 @@ int main(int argc, char **argv) {
      * without stdio shutdown to avoid a failed-connect deadlock. */
     _Exit(rc);
 }
+
+#endif /* FRT_LIBRARY */
